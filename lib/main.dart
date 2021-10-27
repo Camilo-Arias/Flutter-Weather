@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Widget principal where initialize of the app 
+    //Widget principal where initialize of the app
     return MaterialApp(
       title: 'Weatherflutt',
       theme: ThemeData.light(),
