@@ -1,10 +1,17 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:weatherflut/ui/cities/cities_page.dart';
 
 //Widget what function of router
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  void handleNavigationPress(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => CitiesPage(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +64,7 @@ class HomePage extends StatelessWidget {
                     ),
                     //Button by add citys an the app
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => handleNavigationPress(context),
                       child: Text('Agregar Ciudad'),
                       style: ElevatedButton.styleFrom(
                         shape: StadiumBorder(),
