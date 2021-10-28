@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:weatherflut/ui/cities/cities_page.dart';
+import 'package:weatherflut/ui/ui_constansts.dart';
 
 //Widget what function of router
 class HomePage extends StatelessWidget {
@@ -29,7 +28,7 @@ class HomePage extends StatelessWidget {
           SafeArea(
             child: Center(
               child: Container(
-                constraints: BoxConstraints(maxWidth: 200.0),
+                constraints: const BoxConstraints(maxWidth: maxPageWidth),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -44,7 +43,7 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 40,
                     ),
-                    Text(
+                    const Text(
                       'Hola,\nBienvenido',
                       textAlign: TextAlign.left,
                       style: TextStyle(
@@ -55,7 +54,7 @@ class HomePage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
+                    const Text(
                       '¿Qué te parece si agregamos\nuna nueva ciudad?',
                       textAlign: TextAlign.right,
                     ),
@@ -65,9 +64,9 @@ class HomePage extends StatelessWidget {
                     //Button by add citys an the app
                     ElevatedButton(
                       onPressed: () => handleNavigationPress(context),
-                      child: Text('Agregar Ciudad'),
+                      child: const Text('Agregar Ciudad'),
                       style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(),
+                        shape: const StadiumBorder(),
                         primary: Colors.white,
                         onPrimary: Colors.black,
                       ),
