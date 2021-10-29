@@ -17,11 +17,14 @@ class HomePage extends StatelessWidget {
     //It's a template that has individual elements included such as AppBar among others.
     return Scaffold(
       body: Stack(
-        fit: StackFit.expand,
         children: [
           Positioned.fill(
-            child: Image.asset(
-              'assets/welcome.jpg',
+            child: FittedBox(
+              child: Image.asset(
+                'assets/welcome.jpg',
+              ),
+              //Expanded of y background
+              fit: BoxFit.fill,
             ),
           ),
           //Permite agregar elementos en vertical

@@ -1,11 +1,39 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:weatherflut/data/data_const.dart';
+import 'package:weatherflut/model/city.dart';
+import 'package:weatherflut/ui/commons/debouncer.dart';
 import 'package:weatherflut/ui/commons/header_widget.dart';
 import 'package:weatherflut/ui/ui_constansts.dart';
+import 'package:http/http.dart' as http;
 
-class AddCityPage extends StatelessWidget {
+class AddCityPage extends StatefulWidget {
   const AddCityPage({Key? key}) : super(key: key);
+
+  @override
+  State<AddCityPage> createState() => _AddCityPageState();
+}
+
+class _AddCityPageState extends State<AddCityPage> {
+  final debouncer = Debouncer();
+  List<City> cities = [];
+
+  void onChangedText(String text) {
+    debouncer.run(() {
+      requestSearch(text);
+    });
+  }
+
+  void requestSearch(String text) async {
+    final url = Uri.parse('${api}search/?query=$text');
+    final response = await http.get(url);
+    final data = jsonDecode(utf8.decode(response.bodyBytes)) as List;
+    setState(() {
+      cities = data.map((e) => City.fromJson(e)).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +61,7 @@ class AddCityPage extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
                 child: TextField(
+                  onChanged: onChangedText,
                   decoration: InputDecoration(
                     focusedBorder: InputBorder.none,
                     border: InputBorder.none,
@@ -45,6 +74,30 @@ class AddCityPage extends StatelessWidget {
                       color: Colors.grey,
                     ),
                   ),
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              // Solution of definition size of widget list cities
+              Expanded(
+                child: ListView.builder(
+                  itemCount: cities.length,
+                  itemBuilder: (
+                    context,
+                    index,
+                  ) {
+                    final city = cities[index];
+                    return ListTile(
+                      //Title cities
+                      title: Text(city.title),
+                      //By icons
+                      trailing: Icon(
+                        Icons.add,
+                        color: primaryColor,
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
