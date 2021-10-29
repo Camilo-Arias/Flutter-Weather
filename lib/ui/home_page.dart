@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
 
   void handleNavigationPress(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (_) => CitiesPage(),
+      builder: (_) => const CitiesPage(),
     ));
   }
 

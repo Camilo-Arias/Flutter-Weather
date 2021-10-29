@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Weatherflutt',
       theme: ThemeData.light(),
-      home: HomePage(),
+      home: const HomePage(),
     );
   }
 }
