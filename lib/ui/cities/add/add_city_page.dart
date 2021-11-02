@@ -1,13 +1,14 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:convert';
+// import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:weatherflut/data/data_const.dart';
+// import 'package:weatherflut/data/data_const.dart';
 import 'package:weatherflut/model/city.dart';
 import 'package:weatherflut/ui/commons/debouncer.dart';
 import 'package:weatherflut/ui/commons/header_widget.dart';
+import 'package:weatherflut/ui/commons/loader_widget.dart';
 import 'package:weatherflut/ui/ui_constansts.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class AddCityPage extends StatefulWidget {
   const AddCityPage({Key? key}) : super(key: key);
@@ -19,19 +20,26 @@ class AddCityPage extends StatefulWidget {
 class _AddCityPageState extends State<AddCityPage> {
   final debouncer = Debouncer();
   List<City> cities = [];
+  bool loading = false;
 
   void onChangedText(String text) {
     debouncer.run(() {
-      requestSearch(text);
+      if (text.isNotEmpty) requestSearch(text);
     });
   }
 
   void requestSearch(String text) async {
-    final url = Uri.parse('${api}search/?query=$text');
-    final response = await http.get(url);
-    final data = jsonDecode(utf8.decode(response.bodyBytes)) as List;
     setState(() {
-      cities = data.map((e) => City.fromJson(e)).toList();
+      loading = true;
+    });
+    await Future.delayed(const Duration(seconds: 3));
+    // final url = Uri.parse('${api}search/?query=$text');
+    // final response = await http.get(url);
+    // final data = jsonDecode(utf8.decode(response.bodyBytes)) as List;
+    setState(() {
+      loading = false;
+      cities = [City('bogota', 123)];
+      // data.map((e) => City.fromJson(e)).toList();
     });
   }
 
@@ -90,7 +98,12 @@ class _AddCityPageState extends State<AddCityPage> {
                     final city = cities[index];
                     return ListTile(
                       //Title cities
-                      title: Text(city.title),
+                      title: Text(
+                        city.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       //By icons
                       trailing: Icon(
                         Icons.add,
@@ -100,6 +113,13 @@ class _AddCityPageState extends State<AddCityPage> {
                   },
                 ),
               ),
+              if (loading)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: Center(
+                    child: LoaderWidget(),
+                  ),
+                )
             ],
           ),
         ),
