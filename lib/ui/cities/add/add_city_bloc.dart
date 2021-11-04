@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
+import 'package:weatherflut/data/data_const.dart';
 import 'package:weatherflut/model/city.dart';
 import 'package:weatherflut/ui/commons/debouncer.dart';
 
@@ -32,7 +33,7 @@ class AddCityBloc extends ChangeNotifier {
   }
 
   void addCity(City city) {
-    final url = '${api}search/?query?$text';
+    final url = '${api}${city.id}';
     final response = await http.get(url);
     final data = jsonDecode(response.body);
   }
